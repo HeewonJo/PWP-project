@@ -1,29 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>에브리타임</title>
+    <link rel="stylesheet" href="{% static 'css/category.css' %}" />
+  </head>
 <body>
     {% load humanize %}
 
-    <a href={% url 'post:list' %}>메인페이지로 돌아가기</a><hr>
+    <header>
+        <a href={% url 'post:list' %}>메인페이지로 돌아가기</a>
+        <div class="header_right">
+            {% if request.user.is_authenticated %}
+                <a href="{% url 'accounts:logout' %}">로그아웃</a>
+                <a href="{% url 'accounts:my-page' %}">마이페이지</a>
+            {% else %}
+                <a href="{% url 'accounts:signup' %}">회원가입</a>
+                <a href="{% url 'accounts:login' %}">로그인</a>
+            {% endif %}
+        </div>
+    </header>
+
+    <hr>
+
     {% for category in categories %}
         <a href={% url 'post:category' category.slug %} >{{ category.title }}</a>
     {% endfor %}
-    <br>
-    <h1>{{ category.title }}</h1>
-    {% if request.user.is_authenticated %}
-        <a href="{% url 'accounts:logout' %}">로그아웃</a>
-        <a href="{% url 'accounts:my-page' %}">마이페이지</a>
-    {% else %}
-        <a href="{% url 'accounts:signup' %}">회원가입</a>
-        <a href="{% url 'accounts:login' %}">로그인</a>
-    {% endif %}
-    <br><br>
+
+    <h1 class="cate_title">{{ category.title }}</h1>
+
     
 <form method="POST" action="{% url 'post:create' category.slug %}" enctype="multipart/form-data">
     {% csrf_token %}
-    <input type="text" placeholder="제목 입력" name="title"><br>
-    <textarea name="content" placeholder="본문 입력"></textarea><br><br>
-    이미지 - <input type="file" name="image"><br>
-    동영상 - <input type="file" name="video"><br><br>
-    <input type="checkbox" name="anonymity" value="anonymity_true">익명
-    <input type="submit" value="작성 완료">
+
+    <input type="text" placeholder="제목 입력" name="title" class="title"><br>
+    <textarea name="content" placeholder="본문 입력"></textarea><br>
+    <div class="file">
+        <input type="file" name="image">
+        <input type="file" name="video">
+    </div>
+    <br>
+    <div class="submit">
+        <div class="ano">
+            <input type="checkbox" name="anonymity" value="anonymity_true">
+            <div>익명</div>
+        </div>
+        <input type="submit" value="작성 완료">
+    </div>
+
 </form>
 <hr>
 
