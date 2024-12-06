@@ -10,9 +10,10 @@ def list(request):
     return render(request, 'post/list.html', {'posts' : posts, 'categories' : categories})
 
 def category(request, slug):
+    categories = Category.objects.all()
     category = get_object_or_404(Category, slug=slug)
     posts = Post.objects.filter(category=category).order_by('-id')
-    return render(request, 'post/category.html', {'posts' : posts, 'category' : category})
+    return render(request, 'post/category.html', {'posts' : posts, 'category' : category, 'categories' : categories})
 
 @login_required
 def create(request, slug):
