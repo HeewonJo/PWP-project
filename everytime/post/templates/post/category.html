@@ -25,9 +25,11 @@
 
     <hr>
 
-    {% for category in categories %}
-        <a href={% url 'post:category' category.slug %} >{{ category.title }}</a>
-    {% endfor %}
+    <div class="categories">
+        {% for category in categories %}
+            <a href={% url 'post:category' category.slug %}>{{ category.title }}</a>
+        {% endfor %}
+    </div>
 
     <h1 class="cate_title">{{ category.title }}</h1>
 

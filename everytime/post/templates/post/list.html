@@ -19,12 +19,9 @@
     <br><br>
     {% if request.user.is_authenticated %}
         <div class="about_account">
-            <p>닉네임 : {{ user }}</p>
+            <p>닉네임 : {{ user.nickname }}</p>
             
-            <div>
-                <a href="{% url 'accounts:my-post' %}">내가 작성한 글</a>
-                <a href="{% url 'accounts:my-scrap' %}">내가 스크랩한 글</a>
-            </div>
+
             <div>
                 <a href="{% url 'accounts:my-page' %}">마이페이지</a>
                 <a href="{% url 'accounts:logout' %}">로그아웃</a>
@@ -34,7 +31,6 @@
 
     {% else %}
         <div class="out_state">
-            <h1>에브리타임</h1>
             <a href="{% url 'accounts:signup' %}">회원가입</a>
             <a href="{% url 'accounts:login' %}">로그인</a>
         </div>

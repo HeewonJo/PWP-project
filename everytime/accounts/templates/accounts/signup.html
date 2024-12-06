@@ -23,7 +23,7 @@
       <form method="post" action={% url 'accounts:signup' %}>
         {% csrf_token %}
         <div class="input_info">
-          <div class="input_cate">이름</div>
+          <div class="input_cate">아이디</div>
           <input type="text" name="username" id="id_username" placeholder="이름을 입력하세요." />
         </div>
         <div class="input_info">
