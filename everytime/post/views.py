@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
+from django.http import HttpResponseForbidden
 from .models import *
 from django.contrib.auth.decorators import login_required
 
@@ -83,10 +84,15 @@ def create_comment(request, post_id):
         return redirect('post:detail', post_id)
     
 @login_required
-def delete_comment(request, post_id):
+def delete_comment(request, post_id, comment_id):
     post = get_object_or_404(Post, id = post_id)
-    post.delete()
-    return redirect('post:list')
+    comment = get_object_or_404(Comment, id = comment_id)
+
+    if comment.author != request.user:
+        return HttpResponseForbidden("댓글 작성자만 삭제 가능합니다.")
+    
+    comment.delete()
+    return redirect('post:detail', post_id)
 
 def add_like(request, post_id):
     post = get_object_or_404(Post, id = post_id)
