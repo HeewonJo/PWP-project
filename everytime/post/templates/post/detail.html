@@ -42,7 +42,7 @@
     {% for comment in post.comments.all %} {% if comment.anonymity %} 익명 {% else %} {{ comment.author.nickname }} - {% endif %} {{ comment.created_at }}
     <br />
     {{ comment.content }}
-    <a href="{% url 'post:delete-comment' post.id %}">삭제하기</a><br />
+    <a href="{% url 'post:delete-comment' post.id comment.id %}">삭제하기</a><br />
     {% empty %} 댓글이 없습니다 {% endfor %}
 
     <br />
